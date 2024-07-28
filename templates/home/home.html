@@ -1,0 +1,8 @@
+<!-- templates\home\home.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<a href="{% url 'Ecommerce_users:logout_confirmation' %}">Logout</a>
+<a href="{% url 'Ecommerce_users:login' %}">Login</a>
+<h1>Home Page.</h1>
+{% endblock %}
