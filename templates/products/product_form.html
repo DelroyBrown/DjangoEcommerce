@@ -2,14 +2,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2>{% if product.id %}Edit{% else %}Add{% endif %} Product</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {{ images.management_form }}
-    {% for form in images %}
-      {{ form.as_p }}
-    {% endfor %}
-    <button type="submit">{% if product.id %}Update{% else %}Add{% endif %} Product</button>
-  </form>
+<a href="{% url 'Ecommerce_products:product_list' %}"></a>
+<h2>{% if form.instance.id %}Edit{% else %}Add{% endif %} Product</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  <div>
+    {{ form.name.label_tag }} {{ form.name }}
+  </div>
+  <div>
+    {{ form.description.label_tag }} {{ form.description }}
+  </div>
+  <div>
+    {{ form.price.label_tag }} {{ form.price }}
+  </div>
+  <div>
+    {{ form.stock.label_tag }} {{ form.stock }}
+  </div>
+  <div>
+    {{ form.category.label_tag }} {{ form.category }}
+  </div>
+  <div>
+    {{ form.new_category.label_tag }} {{ form.new_category }}
+  </div>
+  {{ images.management_form }}
+  {% for form in images %}
+  {{ form.as_p }}
+  {% endfor %}
+  <button type="submit">{% if form.instance.id %}Update{% else %}Add{% endif %} Product</button>
+</form>
 {% endblock %}

@@ -1,12 +1,39 @@
+# Ecommerce_products\forms.py
 from django import forms
-from .models import Product, ProductImage
+from .models import Product, ProductImage, Category
 from django.forms.models import inlineformset_factory
 
 
 class ProductForm(forms.ModelForm):
+    new_category = forms.CharField(
+        max_length=100,
+        required=False,
+        help_text="Enter a new category if it doesn't exist.",
+    )
+
     class Meta:
         model = Product
-        fields = ["name", "description", "price", "stock"]
+        fields = ["name", "description", "price", "stock", "category"]
+
+    def clean(self):
+        cleaned_data = super().clean()
+        category_name = cleaned_data.get("new_category")
+        category = cleaned_data.get("category")
+
+        if category_name and category:
+            raise forms.ValidationError(
+                "Please either select an existing category or enter a new category, not both."
+            )
+
+        if category_name:
+            category, created = Category.objects.get_or_create(name=category_name)
+            cleaned_data["category"] = category
+        elif not category:
+            raise forms.ValidationError(
+                "You must select a category or enter a new one."
+            )
+
+        return cleaned_data
 
 
 class ProductImageForm(forms.ModelForm):

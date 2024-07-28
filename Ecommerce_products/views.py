@@ -9,14 +9,19 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .models import Product, ProductImage
+from .models import Product, ProductImage, Category
 from .forms import ProductForm, ProductImageFormSet
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer, CategorySerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 
 class ProductListView(ListView):
