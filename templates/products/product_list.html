@@ -1,16 +1,31 @@
+<!-- templates\products\product_list.html -->
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Product List</h2>
 <a href="{% url 'Ecommerce_products:product_create' %}">Add Product</a>
-<ul>
+  <h2>Products</h2>
+  <form method="get">
+    <input type="text" name="q" placeholder="Search products" value="{{ query }}">
+    <select name="category">
+      <option value="">All Categories</option>
+      {% for category in categories %}
+        <option value="{{ category.slug }}" {% if selected_category == category.slug %}selected{% endif %}>{{ category.name }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Search</button>
+  </form>
+
+  <ul>
     {% for product in products %}
-    <li>
-        {{ product.name }} - ${{ product.price }}
-        <a href="{% url 'Ecommerce_products:product_edit' product.id %}">Edit</a>
-        <a href="{% url 'Ecommerce_products:product_delete' product.id %}">Delete</a>
-        <a href="{% url 'Ecommerce_products:product_detail' product.id %}">View</a>
-    </li>
+      <li>
+        <a href="{% url 'Ecommerce_products:product_detail' product.id %}">
+          {{ product.name }}
+        </a>
+        <p>£{{ product.price }}</p>
+        <p>Stock: {{ product.stock }}</p>
+        <p>Description: {{ product.description|truncatewords:30 }}</p>
+        <p>Category: {{ product.category }}</p>
+      </li>
     {% endfor %}
-</ul>
+  </ul>
 {% endblock %}

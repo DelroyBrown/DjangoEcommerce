@@ -1,6 +1,7 @@
 # Ecommerce_products\views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework import viewsets
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
@@ -28,6 +29,28 @@ class ProductListView(ListView):
     model = Product
     template_name = "products/product_list.html"
     context_object_name = "products"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get("q")
+        category_slug = self.request.GET.get("category")
+
+        if query:
+            queryset = queryset.filter(
+                Q(name__icontains=query) | Q(description__icontains=query)
+            )
+
+        if category_slug:
+            queryset = queryset.filter(category__slug=category_slug)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        context["query"] = self.request.GET.get("q", "")
+        context["selected_category"] = self.request.GET.get("category", "")
+        return context
 
 
 class ProductCreateView(CreateView):

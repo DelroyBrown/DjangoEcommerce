@@ -4,6 +4,13 @@ from .models import Product, ProductImage, Category
 from django.forms.models import inlineformset_factory
 
 
+class ProductFilterForm(forms.Form):
+    q = forms.CharField(max_length=100, required=False, label="Search")
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(), required=False, label="Category"
+    )
+
+
 class ProductForm(forms.ModelForm):
     new_category = forms.CharField(
         max_length=100,
