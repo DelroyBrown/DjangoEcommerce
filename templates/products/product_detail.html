@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ product.name }}</h2>
+<p>{{ product.description }}</p>
+<p><strong>Price:</strong> ${{ product.price }}</p>
+<p><strong>Stock:</strong> {{ product.stock }}</p>
+<p><strong>Created at:</strong> {{ product.created_at }}</p>
+<p><strong>Updated at:</strong> {{ product.updated_at }}</p>
+<div>
+    {% for image in product.images.all %}
+    <div>
+        <img src="{{ image.image.url }}" alt="{{ product.name }}" style="max-width: 200px;">
+    </div>
+    {% endfor %}
+</div>
+<a href="{% url 'Ecommerce_products:product_edit' product.id %}">Edit</a>
+<a href="{% url 'Ecommerce_products:product_delete' product.id %}">Delete</a>
+<a href="{% url 'Ecommerce_products:product_list' %}">Back to list</a>
+{% endblock %}

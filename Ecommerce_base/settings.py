@@ -22,11 +22,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
     # My Apps
     "Ecommerce_base",
     "Ecommerce_home",
     "Ecommerce_profiles",
     "Ecommerce_users",
+    "Ecommerce_products",
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,15 @@
+<!-- templates\products\product_form.html -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>{% if product.id %}Edit{% else %}Add{% endif %} Product</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ images.management_form }}
+    {% for form in images %}
+      {{ form.as_p }}
+    {% endfor %}
+    <button type="submit">{% if product.id %}Update{% else %}Add{% endif %} Product</button>
+  </form>
+{% endblock %}
