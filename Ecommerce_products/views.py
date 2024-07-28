@@ -10,8 +10,8 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .models import Product, ProductImage, Category
-from .forms import ProductForm, ProductImageFormSet
+from .models import Product, ProductImage, Category, Review
+from .forms import ProductForm, ProductImageFormSet, ReviewForm
 from .serializers import ProductSerializer, CategorySerializer
 
 
@@ -113,3 +113,22 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = "products/product_detail.html"
     context_object_name = "product"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["reviews"] = Review.objects.filter(product=self.object, approved=True)
+        context["review_form"] = ReviewForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        review_form = ReviewForm(request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.product = self.object
+            review.save()
+            return self.render_to_response(context)
+        else:
+            context["review_form"] = review_form
+            return self.render_to_response(context)

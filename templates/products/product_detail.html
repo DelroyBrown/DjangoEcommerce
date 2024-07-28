@@ -1,4 +1,4 @@
-<!-- templates\products\product_detail.html -->
+<!-- templates/products/product_detail.html -->
 {% extends "base.html" %}
 
 {% block content %}
@@ -16,6 +16,25 @@
     </div>
     {% endfor %}
 </div>
+
+<h3>Reviews</h3>
+<div>
+    {% for review in reviews %}
+    <div>
+        <p><strong>{{ review.name }}</strong> ({{ review.created_at }})</p>
+        <p>Rating: {{ review.rating }}/5</p>
+        <p>{{ review.review }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+<h3>Leave a Review</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ review_form.as_p }}
+    <button type="submit">Submit Review</button>
+</form>
+
 <a href="{% url 'Ecommerce_products:product_edit' product.id %}">Edit</a>
 <a href="{% url 'Ecommerce_products:product_delete' product.id %}">Delete</a>
 <a href="{% url 'Ecommerce_products:product_list' %}">Back to list</a>

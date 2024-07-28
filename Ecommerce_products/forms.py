@@ -1,6 +1,6 @@
 # Ecommerce_products\forms.py
 from django import forms
-from .models import Product, ProductImage, Category
+from .models import Product, ProductImage, Category, Review
 from django.forms.models import inlineformset_factory
 
 
@@ -52,3 +52,9 @@ class ProductImageForm(forms.ModelForm):
 ProductImageFormSet = inlineformset_factory(
     Product, ProductImage, form=ProductImageForm, extra=5, can_delete=True
 )
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ["name", "email", "review", "rating"]
