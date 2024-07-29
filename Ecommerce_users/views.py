@@ -30,15 +30,20 @@ def logout_view(request):
 
 
 def login_view(request):
+    next_url = request.GET.get("next", "")
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             auth_login(request, user)
+            if next_url:
+                return redirect(next_url)
             return redirect("Ecommerce_users:profile")
     else:
         form = AuthenticationForm()
-    return render(request, "users/registration/login.html", {"form": form})
+    return render(
+        request, "users/registration/login.html", {"form": form, "next": next_url}
+    )
 
 
 def password_reset_request(request):
@@ -68,15 +73,20 @@ def password_reset_request(request):
 
 
 def register(request):
+    next_url = request.GET.get("next", "")
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
+            if next_url:
+                return redirect(next_url)
             return redirect("Ecommerce_users:profile")
     else:
         form = CustomUserCreationForm()
-    return render(request, "users/registration/register.html", {"form": form})
+    return render(
+        request, "users/registration/register.html", {"form": form, "next": next_url}
+    )
 
 
 class CustomPasswordResetDoneView(PasswordResetDoneView):

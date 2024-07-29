@@ -1,0 +1,9 @@
+<!-- templates\users\registration\login_or_register.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Please Login or Register</h2>
+<p>To continue, you need to either log in or register.</p>
+<a href="{% url 'Ecommerce_users:login' %}?next={{ next }}">Login</a> or
+<a href="{% url 'Ecommerce_users:register' %}?next={{ next }}">Register</a>
+{% endblock %}
