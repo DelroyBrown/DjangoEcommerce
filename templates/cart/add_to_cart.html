@@ -1,0 +1,16 @@
+<!-- templates\cart\add_to_cart.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Add {{ product.name }} to Cart</h2>
+<p><strong>Price:</strong> ${{ product.price }}</p>
+<p><strong>Stock:</strong> {{ product.stock }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add to Cart</button>
+</form>
+
+<a href="{% url 'Ecommerce_products:product_detail' product.id %}">Back to Product</a>
+{% endblock %}

@@ -1,4 +1,4 @@
-<!-- templates/products/product_detail.html -->
+<!-- templates\products\product_detail.html -->
 {% extends "base.html" %}
 
 {% block content %}
@@ -38,4 +38,8 @@
 <a href="{% url 'Ecommerce_products:product_edit' product.id %}">Edit</a>
 <a href="{% url 'Ecommerce_products:product_delete' product.id %}">Delete</a>
 <a href="{% url 'Ecommerce_products:product_list' %}">Back to list</a>
+
+<!-- Add to Cart -->
+<h3>Add to Cart</h3>
+<a href="{% url 'Ecommerce_cart:add_to_cart' product.id %}">Add to Cart</a>
 {% endblock %}

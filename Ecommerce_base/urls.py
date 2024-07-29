@@ -8,10 +8,13 @@ app_name = "Ecommerce_base"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", include("Ecommerce_home.urls")),
     path("users/", include("Ecommerce_users.urls", namespace="Ecommerce_users")),
     path("profiles/", include("Ecommerce_profiles.urls")),
-    path("", include("Ecommerce_home.urls")),
-    path("products/", include("Ecommerce_products.urls")),
+    path(
+        "products/", include("Ecommerce_products.urls", namespace="Ecommerce_products")
+    ),
+    path("cart/", include("Ecommerce_cart.urls", namespace="Ecommerce_cart")),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,20 @@
+<!-- templates\cart\cart_detail.html -->
+{% extends "base.html" %}
+{% load cart_extras %}
+
+{% block content %}
+<a href="{% url 'Ecommerce_products:product_list' %}">Product List</a>
+<h2>Your Cart</h2>
+{% if cart and cart.items.count > 0 %}
+<ul>
+    {% for item in cart.items.all %}
+    <li>{{ item.product.name }} (x{{ item.quantity }}) - ${{ item.get_total_price }}
+        <a href="{% url 'Ecommerce_cart:remove_from_cart' item.id %}">Remove</a>
+    </li>
+    {% endfor %}
+</ul>
+<p>Total: ${{ cart.items.all|cart_total_price }}</p>
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %}
+{% endblock %}

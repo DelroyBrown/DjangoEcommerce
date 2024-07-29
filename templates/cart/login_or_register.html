@@ -1,0 +1,11 @@
+<!-- templates\cart\login_or_register.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Login or Register</h2>
+<p>You need to be logged in to add items to your cart. Please
+    <a href="{% url 'Ecommerce_users:login' %}">login</a> or
+    <a href="{% url 'Ecommerce_users:register' %}">register</a>
+    to continue.
+</p>
+{% endblock %}
