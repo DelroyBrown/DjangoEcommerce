@@ -1,7 +1,11 @@
 # Ecommerce_cart\views.py
+import stripe
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from django.urls import reverse
+from django.conf import settings
 from .models import Cart, CartItem
 from .forms import AddToCartForm
 from Ecommerce_products.models import Product
@@ -41,7 +45,11 @@ def add_to_cart(request, product_id):
 @login_required
 def view_cart(request):
     cart = Cart.objects.filter(user=request.user).first()
-    return render(request, "cart/cart_detail.html", {"cart": cart})
+    context = {
+        "cart": cart,
+        "stripe_public_key": settings.STRIPE_PUBLIC_KEY,
+    }
+    return render(request, "cart/cart_detail.html", context)
 
 
 @login_required
@@ -53,3 +61,51 @@ def remove_from_cart(request, item_id):
 
 def login_or_register(request):
     return render(request, "users/registration/login_or_register.html")
+
+
+# PAYMENTS SECTION
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
+@login_required
+def create_checkout_session(request):
+    cart = Cart.objects.get(user=request.user)
+    line_items = []
+    for item in cart.items.all():
+        line_items.append(
+            {
+                "price_data": {
+                    "currency": "usd",
+                    "product_data": {
+                        "name": item.product.name,
+                    },
+                    "unit_amount": int(item.product.price * 100),
+                },
+                "quantity": item.quantity,
+            }
+        )
+
+    session = stripe.checkout.Session.create(
+        payment_method_types=["card"],
+        line_items=line_items,
+        mode="payment",
+        success_url=request.build_absolute_uri(
+            reverse("Ecommerce_cart:payment_success")
+        ),
+        cancel_url=request.build_absolute_uri(reverse("Ecommerce_cart:payment_cancel")),
+    )
+
+    return JsonResponse({"id": session.id})
+
+
+@login_required
+def payment_success(request):
+    cart = Cart.objects.get(user=request.user)
+    cart.items.all().delete()
+    return render(request, "cart/payment_success.html")
+
+
+@login_required
+def payment_cancel(request):
+    return render(request, "cart/payment_cancel.html")
