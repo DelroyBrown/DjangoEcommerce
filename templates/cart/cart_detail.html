@@ -1,4 +1,4 @@
-<!-- templates/cart/cart_detail.html -->
+<!-- templates\cart\cart_detail.html -->
 {% extends "base.html" %}
 {% load cart_extras %}
 
@@ -13,13 +13,25 @@
     </li>
     {% endfor %}
 </ul>
-<p>Total: ${{ cart.items.all|cart_total_price }}</p>
+<p>Total: ${{ cart.get_total_price }}</p>
+
+<form id="shipping-form">
+    <label for="shipping-select">Select Shipping Option:</label>
+    <select id="shipping-select" name="shipping_option">
+        <option value="">Choose an option</option>
+        {% for option in shipping_options %}
+        <option value="{{ option.id }}">{{ option.name }} - ${{ option.price }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Update Shipping</button>
+</form>
 
 <button id="checkout-button">Checkout</button>
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>
     var stripe = Stripe('{{ stripe_public_key }}');
+
     document.querySelector("#checkout-button").addEventListener("click", function () {
         fetch("{% url 'Ecommerce_cart:create_checkout_session' %}", {
             method: "POST",
@@ -36,6 +48,26 @@
                 if (result.error) {
                     alert(result.error.message);
                 }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    });
+
+    document.querySelector("#shipping-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        var shippingOptionId = document.querySelector("#shipping-select").value;
+        fetch("{% url 'Ecommerce_cart:update_shipping_option' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ shipping_option: shippingOptionId }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                location.reload();
             })
             .catch((error) => {
                 console.error("Error:", error);

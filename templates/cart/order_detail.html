@@ -1,0 +1,28 @@
+<!-- templates\cart\order_detail.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Order #{{ order.id }}</h2>
+<p>Placed on: {{ order.created_at|date:"d M Y" }}</p>
+<p>Total Amount: £{{ order.total_amount }}</p>
+
+{% if order.shipping_option %}
+<p>Shipping Option: {{ order.shipping_option.name }} - £{{ order.shipping_option.price }}</p>
+{% else %}
+<p>No shipping option selected.</p>
+{% endif %}
+
+<p>Shipping Address:</p>
+<p>{{ order.shipping_address }}</p>
+
+<h3>Order Items:</h3>
+<ul>
+    {% for item in order_items %}
+    <li>
+        {{ item.product.name }} (x{{ item.quantity }}) - £{{ item.price }}
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'Ecommerce_cart:order_history' %}">Back to Order History</a>
+{% endblock %}

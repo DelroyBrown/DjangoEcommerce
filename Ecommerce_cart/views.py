@@ -1,12 +1,13 @@
 # Ecommerce_cart\views.py
 import stripe
+import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.urls import reverse
 from django.conf import settings
-from .models import Cart, CartItem
+from .models import Cart, CartItem, ShippingOption, Order, OrderItem
 from .forms import AddToCartForm
 from Ecommerce_products.models import Product
 
@@ -45,9 +46,11 @@ def add_to_cart(request, product_id):
 @login_required
 def view_cart(request):
     cart = Cart.objects.filter(user=request.user).first()
+    shipping_options = ShippingOption.objects.all()
     context = {
         "cart": cart,
         "stripe_public_key": settings.STRIPE_PUBLIC_KEY,
+        "shipping_options": shipping_options,
     }
     return render(request, "cart/cart_detail.html", context)
 
@@ -72,6 +75,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def create_checkout_session(request):
     cart = Cart.objects.get(user=request.user)
     line_items = []
+
     for item in cart.items.all():
         line_items.append(
             {
@@ -86,13 +90,29 @@ def create_checkout_session(request):
             }
         )
 
+    if cart.shipping_option:
+        line_items.append(
+            {
+                "price_data": {
+                    "currency": "usd",
+                    "product_data": {
+                        "name": "Shipping",
+                    },
+                    "unit_amount": int(cart.shipping_option.price * 100),
+                },
+                "quantity": 1,
+            }
+        )
+
     session = stripe.checkout.Session.create(
         payment_method_types=["card"],
         line_items=line_items,
         mode="payment",
+        shipping_address_collection={"allowed_countries": ["US", "GB"]},
         success_url=request.build_absolute_uri(
             reverse("Ecommerce_cart:payment_success")
-        ),
+        )
+        + "?session_id={CHECKOUT_SESSION_ID}",
         cancel_url=request.build_absolute_uri(reverse("Ecommerce_cart:payment_cancel")),
     )
 
@@ -101,11 +121,63 @@ def create_checkout_session(request):
 
 @login_required
 def payment_success(request):
+    session_id = request.GET.get("session_id")
+    if not session_id:
+        return redirect("Ecommerce_cart:view_cart")
+
+    session = stripe.checkout.Session.retrieve(session_id)
+
     cart = Cart.objects.get(user=request.user)
+
+    order = Order.objects.create(
+        user=request.user,
+        total_amount=cart.get_total_price(),
+        shipping_address=session["customer_details"]["address"],
+        shipping_option=cart.shipping_option,
+        stripe_payment_intent_id=session.payment_intent,
+    )
+
+    for item in cart.items.all():
+        OrderItem.objects.create(
+            order=order,
+            product=item.product,
+            quantity=item.quantity,
+            price=item.product.price,
+        )
+
     cart.items.all().delete()
-    return render(request, "cart/payment_success.html")
+
+    return render(request, "cart/payment_success.html", {"order": order})
 
 
 @login_required
 def payment_cancel(request):
     return render(request, "cart/payment_cancel.html")
+
+
+def update_shipping_option(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        shipping_option_id = data.get("shipping_option")
+        cart = Cart.objects.get(user=request.user)
+        cart.shipping_option = ShippingOption.objects.get(id=shipping_option_id)
+        cart.save()
+        return JsonResponse({"status": "success"})
+    return JsonResponse({"status": "error"}, status=400)
+
+
+@login_required
+def order_history(request):
+    orders = Order.objects.filter(user=request.user).order_by("-created_at")
+    return render(request, "cart/order_history.html", {"orders": orders})
+
+
+@login_required
+def order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    order_items = order.order_items.all()
+    context = {
+        "order": order,
+        "order_items": order_items,
+    }
+    return render(request, "cart/order_detail.html", context)
