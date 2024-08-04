@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Django Ecommerce</title>
+    <link rel="stylesheet" href="{% static 'home/css/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/odometer.min.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/swiper.min.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+
 </head>
+
 <body>
 
     {% block content %}
     {% endblock %}
-    
 </body>
+
+<script src="{% static 'home/javascript/jquery.min.js' %}"></script>
+<script src="{% static 'home/javascript/bootstrap.min.js' %}"></script>
+<script src="{% static 'home/javascript/gsap.min.js' %}"></script>
+<script src="{% static 'home/javascript/locomotive-scroll.min.js' %}"></script>
+<script src="{% static 'home/javascript/scrollTrigger.min.js' %}"></script>
+<script src="{% static 'home/javascript/kinetic-slider.js' %}"></script>
+<script src="{% static 'home/javascript/fancybox.min.js' %}"></script>
+<script src="{% static 'home/javascript/odometer.min.js' %}"></script>
+<script src="{% static 'home/javascript/swiper.min.js' %}"></script>
+<script src="{% static 'home/javascript/scripts.js' %}"></script>
+
+
 </html>
