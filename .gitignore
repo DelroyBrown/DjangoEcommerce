@@ -95,6 +95,7 @@ coverage.xml
 celerybeat-schedule.* 
 
 home copy.html
+product_detail copy.html
 
 # SageMath parsed files 
 *.sage.py 

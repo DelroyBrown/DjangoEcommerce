@@ -160,7 +160,7 @@
             <div class="exhibition-box" data-scroll
               data-scroll-speed="{% if forloop.counter0|divisibleby:2 %}1{% else %}-1{% endif %}">
               <figure>
-                <a href="exhibition-detail.html">
+                <a href="{% url 'Ecommerce_products:product_detail' product.id %}">
                   {% for image in product.images.all %}
                   <img src="{{ image.image.url }}" alt="Image" class="img">
                   {% endfor %}
@@ -174,7 +174,11 @@
                 <!-- end info -->
               </figure>
               <div class="content-box">
-                <h4><a href="exhibition-detail.html">{{ product.name }}</a></h4>
+                <h4>
+                  <a href="{% url 'Ecommerce_products:product_detail' product.id %}">
+                    {{ product.name }}
+                  </a>
+                </h4>
                 <p class="text-center">£{{ product.price }}</p>
                 <p> 15 August – 31 October 2020 </p>
               </div>
