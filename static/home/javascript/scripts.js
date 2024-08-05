@@ -330,12 +330,12 @@
 
     (function () {
 
-        return requestAnimationFrame ||
-            mozRequestAnimationFrame ||
-            webkitRequestAnimationFrame ||
-            oRequestAnimationFrame ||
-            msRequestAnimationFrame ||
-            function (callback) {
+        return requestAnimationFrame
+            || mozRequestAnimationFrame
+            || webkitRequestAnimationFrame
+            || oRequestAnimationFrame
+            || msRequestAnimationFrame
+            || function (callback) {
                 setTimeout(callback, 1000 / 60);
             };
 

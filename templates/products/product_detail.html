@@ -121,7 +121,9 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6">
                         <div class="side-image" data-scroll data-scroll-speed="1">
-                            <img src="{{ product.image_4.url }}" alt="Image">
+                            {% if product.image_2 %}
+                            <img src="{{ product.image_2.url }}" alt="Image">
+                            {% endif %}
                         </div>
                         <!-- end side-image -->
                     </div>
@@ -167,8 +169,23 @@
                     </div>
                     <!-- end col-12 -->
                     <div class="col-12">
-                        <figure class="image-box" data-scroll data-scroll-speed="1"> <img src="{{ product.image_5.url }}"
-                                alt="Image"> </figure>
+                        <figure class="image-box" data-scroll data-scroll-speed="1">
+                            {% if product.image_1 %}
+                            <img src="{{ product.image_1.url }}" alt="Image">
+                            {% endif %}
+                            {% if product.image_2 %}
+                            <img src="{{ product.image_2.url }}" alt="Image">
+                            {% endif %}
+                            {% if product.image_3 %}
+                            <img src="{{ product.image_3.url }}" alt="Image">
+                            {% endif %}
+                            {% if product.image_4 %}
+                            <img src="{{ product.image_4.url }}" alt="Image">
+                            {% endif %}
+                            {% if product.image_5 %}
+                            <img src="{{ product.image_5.url }}" alt="Image">
+                            {% endif %}
+                        </figure>
                     </div>
                     <!-- end col-12 -->
                     <div class="clearfix spacing-50"></div>
@@ -225,7 +242,7 @@
             <!-- end container -->
         </section>
         <!-- end content-section -->
-        
+
         <!-- FOOTER -->
         {% include 'common_includes/footer.html' %}
     </div>
