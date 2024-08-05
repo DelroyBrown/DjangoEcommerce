@@ -29,11 +29,19 @@ class Product(models.Model):
         related_name="products",
         on_delete=models.CASCADE,
     )
-    image_1 = models.ImageField(upload_to='product-images', blank=False, null=False)
-    image_2 = models.ImageField(upload_to='product-images', blank=True, null=True)
-    image_3 = models.ImageField(upload_to='product-images', blank=True, null=True)
-    image_4 = models.ImageField(upload_to='product-images', blank=True, null=True)
-    image_5 = models.ImageField(upload_to='product-images', blank=True, null=True)
+    image_1 = models.ImageField(upload_to="product-images", blank=False, null=False)
+    image_2 = models.ImageField(upload_to="product-images", blank=True, null=True)
+    image_3 = models.ImageField(upload_to="product-images", blank=True, null=True)
+    image_4 = models.ImageField(upload_to="product-images", blank=True, null=True)
+    image_5 = models.ImageField(upload_to="product-images", blank=True, null=True)
+
+    museum_name = models.CharField(max_length=100, blank=False, null=False, default="")
+    museum_location = models.CharField(
+        max_length=150, blank=False, null=False, default=""
+    )
+    museum_details = models.TextField(default='', blank=False, null=False)
+    opening_time = models.DateTimeField()
+    closing_time = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

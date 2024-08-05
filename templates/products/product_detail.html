@@ -40,38 +40,35 @@
                             <table>
                                 <tr>
                                     <td>START</td>
-                                    <td>: 15 November 2020</td>
+                                    <td>
+                                        : {{ product.opening_time|date:"D, M d, y" }} - 
+                                         {{ product.opening_time|time:"H:i" }}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>END </td>
-                                    <td>: 25 November 2020 </td>
-                                </tr>
+                                    <td>
+                                        : {{ product.closing_time|date:"D, M d, y" }} - 
+                                         {{ product.closing_time|time:"H:i" }}
+                                    </td>                                </tr>
                                 <tr>
                                     <td>EVENT CATEGORY </td>
-                                    <td>: Exhibition</td>
+                                    <td>: {{ product.category }}</td>
                                 </tr>
                                 <tr>
                                     <td>VENUE NAME </td>
-                                    <td>: Tate Modern</td>
+                                    <td>: {{ product.museum_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>VENUE LOCATION </td>
+                                    <td>: {{ product.museum_location }}</td>
                                 </tr>
                             </table>
                         </div>
                         <!-- end side-content -->
 
-                        <div class="side-icon-list">
-                            <ul>
-                                <li>
-                                    <figure> <img src="{% static 'images/icon01.png' %}" alt="Image"> </figure>
-                                    <div class="content">
-                                        <h5>Opening times</h5>
-                                        <p>From 27 August<br>
-                                            Thursday – Sunday: 11.00-19.00</p>
-                                    </div>
-                                    <!-- end content -->
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- end side-icon-list -->
+                    
+                 
                     </div>
                     <!-- end col-6 -->
                     <div class="col-lg-6">
@@ -94,18 +91,7 @@
                     <div class="col-12">
                         <div class="text-box">
                             <h3>Exhibitions Details</h3>
-                            <p>This exhibition is a rare chance to experience two of Yayoi Kusama’s Infinity Mirror
-                                Rooms. These immersive installations will transport you into Kusama’s unique vision of
-                                endless reflections.</p>
-
-                            <p>Infinity Mirrored Room – Filled with the Brilliance of Life is one of Kusama’s largest
-                                installations to date and was made for her 2012 retrospective at the gallery. It is
-                                shown alongside Chandelier of Grief, a room which creates the illusion of a boundless
-                                universe of rotating crystal chandeliers. </p>
-
-                            <p>A small presentation of photographs – some on display for the first time – provides
-                                historical context for the global phenomenon that Kusama’s mirrored rooms have become
-                                today.</p>
+                            <p>{{ product.museum_details }}</p>
                         </div>
                         <!-- end text-box -->
                     </div>
@@ -172,18 +158,6 @@
                         <figure class="image-box" data-scroll data-scroll-speed="1">
                             {% if product.image_1 %}
                             <img src="{{ product.image_1.url }}" alt="Image">
-                            {% endif %}
-                            {% if product.image_2 %}
-                            <img src="{{ product.image_2.url }}" alt="Image">
-                            {% endif %}
-                            {% if product.image_3 %}
-                            <img src="{{ product.image_3.url }}" alt="Image">
-                            {% endif %}
-                            {% if product.image_4 %}
-                            <img src="{{ product.image_4.url }}" alt="Image">
-                            {% endif %}
-                            {% if product.image_5 %}
-                            <img src="{{ product.image_5.url }}" alt="Image">
                             {% endif %}
                         </figure>
                     </div>
