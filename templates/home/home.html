@@ -14,7 +14,7 @@
     {% include 'common_includes/side-box.html' %}
     <!-- NAV BAR -->
     {% include 'common_includes/nav-bar.html' %}
-    
+
     <header class="page-header" data-background="{% static 'images/page-header.jpg' %}">
       <div class="inner">
         <svg width="580" height="400" class="svg-morph">
@@ -30,6 +30,7 @@
       </div>
       <!-- end inner -->
     </header>
+    <!-- WORLDS FIRST SECTION -->
     <section class="content-section" data-background="#fffbf7">
       <div class="container">
         <div class="row align-items-center">
@@ -37,21 +38,23 @@
             <div class="section-title text-center">
               <figure><img src="images/title-shape.png" alt="Image"></figure>
               <h2>The world's first <br>
-              Ai art museum
+                Ai art museum
               </h2>
             </div>
             <!-- end section-title -->
           </div>
           <!-- end col-12 -->
           <div class="col-lg-7">
-            <figure class="image-box" data-scroll data-scroll-speed="-1" > <img src="images/side-imag01.jpg" alt="Image"> </figure>
+            <figure class="image-box" data-scroll data-scroll-speed="-1">
+              <img src="{% static 'images/side-imag01.jpg' %}" alt="Image">
+            </figure>
           </div>
           <!-- end col-7 -->
           <div class="col-lg-5">
             <div class="side-icon-list right-side">
               <ul>
                 <li>
-                  <figure> <img src="images/icon01.png" alt="Image"> </figure>
+                  <figure> <img src="{% static 'images/icon01.png' %}" alt="Image"> </figure>
                   <div class="content">
                     <h5>Opening times</h5>
                     <p>From 27 August<br>
@@ -60,16 +63,17 @@
                   <!-- end content -->
                 </li>
                 <li>
-                  <figure> <img src="images/icon02.png" alt="Image"> </figure>
+                  <figure> <img src="{% static 'images/icon02.png' %}" alt="Image"> </figure>
                   <div class="content">
                     <h5>Book Online</h5>
                     <p>Some exhibitions and events carry <br>
                       a separate charge</p>
-                    <a href="#">Join Now and Book Online</a> </div>
+                    <a href="#">Join Now and Book Online</a>
+                  </div>
                   <!-- end content -->
                 </li>
                 <li>
-                  <figure> <img src="images/icon03.png" alt="Image"> </figure>
+                  <figure> <img src="{% static 'images/icon03.png' %}" alt="Image"> </figure>
                   <div class="content">
                     <h5>Where You Visit</h5>
                     <p>Cromwell New Street Road<br>
@@ -87,14 +91,29 @@
       </div>
       <!-- end container -->
     </section>
-    <!-- PRODUCTS FOR SALE SECTION -->
-    <section class="content-section" data-background="#fffbf7">
+    <!-- UPCOMING EVENTS SECTION -->
+    <section class="content-section">
       <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="section-title">
+              <figure><img src="images/title-shape.png" alt="Image"></figure>
+              <h6>DON’T MISS THE OPPORTUNITY</h6>
+              <h2>Upcoming Events</h2>
+            </div>
+            <!-- end section-title -->
+          </div>
+          <!-- end col-9 -->
+          <div class="col-lg-3"> <a href="#" class="circle-button">BOOK AN <br>
+              EVENT</a> </div>
+          <!-- end col-3 -->
+        </div>
+        <!-- end row -->
         <div class="row justify-content-center">
           {% for product in all_products %}
           <div class="col-lg-4 col-md-6">
-            <div class="exhibition-box" data-scroll
-              data-scroll-speed="{% if forloop.counter0|divisibleby:2 %}1{% else %}-1{% endif %}">
+            <div class="exhibition-box is-inview" data-scroll="" data-scroll-speed="-1"
+              style="transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -33.9859, 0, 1);">
               <figure>
                 <a href="{% url 'Ecommerce_products:product_detail' product.id %}">
                   <img src="{{ product.image_1.url }}" alt="Image" class="img">
@@ -113,21 +132,19 @@
                     {{ product.name }}
                   </a>
                 </h4>
-                <p class="text-center">£{{ product.price }}</p>
-                <p> 15 August – 31 October 2020 </p>
+                <p> {{ product.created_at }}</p>
               </div>
               <!-- end content-box -->
             </div>
             <!-- end exhibition-box -->
           </div>
           {% endfor %}
-
-          <!-- end col-4 -->
         </div>
         <!-- end row -->
       </div>
       <!-- end container -->
     </section>
+
     <!-- end content-section -->
     <section class="content-section no-spacing" data-background="#94ffc4">
       <div class="container">
