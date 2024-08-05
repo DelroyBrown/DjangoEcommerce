@@ -10,8 +10,8 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .models import Product, ProductImage, Category, Review
-from .forms import ProductForm, ProductImageFormSet, ReviewForm
+from .models import Product,  Category, Review
+from .forms import ProductForm,  ReviewForm
 from .serializers import ProductSerializer, CategorySerializer
 
 

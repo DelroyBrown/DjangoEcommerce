@@ -29,6 +29,11 @@ class Product(models.Model):
         related_name="products",
         on_delete=models.CASCADE,
     )
+    image_1 = models.ImageField(upload_to='product-images', blank=False, null=False)
+    image_2 = models.ImageField(upload_to='product-images', blank=True, null=True)
+    image_3 = models.ImageField(upload_to='product-images', blank=True, null=True)
+    image_4 = models.ImageField(upload_to='product-images', blank=True, null=True)
+    image_5 = models.ImageField(upload_to='product-images', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -36,14 +41,14 @@ class Product(models.Model):
         return self.name
 
 
-class ProductImage(models.Model):
-    product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="images"
-    )
-    image = models.ImageField(upload_to="product-images", blank=True, null=True)
+# class ProductImage(models.Model):
+#     product = models.ForeignKey(
+#         Product, on_delete=models.CASCADE, related_name="images"
+#     )
+#     image = models.ImageField(upload_to="product-images", blank=True, null=True)
 
-    def __str__(self):
-        return f"Image for {self.product.name}"
+#     def __str__(self):
+#         return f"Image for {self.product.name}"
 
 
 class Review(models.Model):
