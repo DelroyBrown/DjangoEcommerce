@@ -5,27 +5,27 @@
 {% block content %}
 <style>
     .all-exibits-btn {
-      height: 40px;
-      line-height: 40px;
-      display: inline-block;
-      padding: 0 80px;
-      background: #94ffc4;
-      color: #080808;
-      font-size: 14px;
-      font-weight: 700;
-      -webkit-transition: .25s ease-in-out;
-      -moz-transition: .25s ease-in-out;
-      -ms-transition: .25s ease-in-out;
-      -o-transition: .25s ease-in-out;
-      transition: .25s ease-in-out;
-  }
-  
-  .all-exibits-btn:hover {
-      text-decoration: none;
-      background: #080808;
-      color: #fff;
-  }
-  </style>
+        height: 40px;
+        line-height: 40px;
+        display: inline-block;
+        padding: 0 80px;
+        background: #94ffc4;
+        color: #080808;
+        font-size: 14px;
+        font-weight: 700;
+        -webkit-transition: .25s ease-in-out;
+        -moz-transition: .25s ease-in-out;
+        -ms-transition: .25s ease-in-out;
+        -o-transition: .25s ease-in-out;
+        transition: .25s ease-in-out;
+    }
+
+    .all-exibits-btn:hover {
+        text-decoration: none;
+        background: #080808;
+        color: #fff;
+    }
+</style>
 
 
 <div class="smooth-scroll">
@@ -36,18 +36,8 @@
         {% include 'common_includes/side-box.html' %}
         <!-- NAV BAR -->
         {% include 'common_includes/nav-bar.html' %}
-        <header class="page-header" data-background="{{ product.image_1.url }}">
-            <div class="inner">
-                <svg width="580" height="400" class="svg-morph">
-                    <path id="svg_morph"
-                        d="m261,30.4375c0,0 114,6 151,75c37,69 37,174 6,206.5625c-31,32.5625 -138,11.4375 -196,-19.5625c-58,-31 -86,-62 -90,-134.4375c12,-136.5625 92,-126.5625 129,-127.5625z" />
-                </svg>
-                <h1></h1>
-                <p>{{ product.name }}</p>
-            </div>
-            <!-- end inner -->
-        </header>
-        <!-- end page-header -->
+     
+
         <section class="content-section" data-background="#fffbf7">
             <div class="container">
                 <div class="row align-items-center">
@@ -64,16 +54,17 @@
                                 <tr>
                                     <td>START</td>
                                     <td>
-                                        : {{ product.opening_time|date:"D, M d, y" }} - 
-                                         {{ product.opening_time|time:"H:i" }}
+                                        : {{ product.opening_time|date:"D, M d, y" }} -
+                                        {{ product.opening_time|time:"H:i" }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>END </td>
                                     <td>
-                                        : {{ product.closing_time|date:"D, M d, y" }} - 
-                                         {{ product.closing_time|time:"H:i" }}
-                                    </td>                                </tr>
+                                        : {{ product.closing_time|date:"D, M d, y" }} -
+                                        {{ product.closing_time|time:"H:i" }}
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>EVENT CATEGORY </td>
                                     <td>: {{ product.category }}</td>
@@ -91,12 +82,12 @@
                                 <a href="{% url 'Ecommerce_cart:add_to_cart' product.id %}" class="all-exibits-btn">
                                     Buy Tickets
                                 </a>
-                              </div>
+                            </div>
                         </div>
                         <!-- end side-content -->
 
-                    
-                 
+
+
                     </div>
                     <!-- end col-6 -->
                     <div class="col-lg-6">
@@ -112,7 +103,90 @@
             </div>
             <!-- end container -->
         </section>
-        <!-- end content-section -->
+
+        <section class="content-section no-bottom-spacing">
+
+            <div class="container-fluid px-0">
+                <div class="row g-0">
+                    <div class="col-lg-4">
+                        <div class="image-icon-box is-inview" data-scroll="" data-scroll-speed="-1"
+                            style="transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0.56875, 0, 1);">
+                            <figure class="content-image">
+                                <img src="{{ product.image_1.url }}" alt="Image">
+                            </figure>
+                            <div class="content-box">
+                                <b>01.</b>
+                                <h4>Check What's Open</h4>
+                                <div class="expand">
+                                    <p>
+                                        Your safety is our first priority. Entry to the
+                                        National Maritime Museum is still free, but to
+                                        help us ensure social distancing.
+                                    </p>
+                                    <a href="#" class="custom-link">Learn More</a>
+                                </div>
+                                <!-- end expand -->
+                            </div>
+                            <!-- end content-box -->
+                        </div>
+                        <!-- end image-icon-box -->
+                    </div>
+                    <!-- end col-4 -->
+                    <div class="col-lg-4">
+                        <div class="image-icon-box is-inview" data-scroll="" data-scroll-speed="0.5"
+                            style="transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -0.284375, 0, 1);">
+                            <figure class="content-image">
+                                <img src="{{ product.image_2.url }}" alt="Image">
+                            </figure>
+                            <div class="content-box">
+                                <b>02.</b>
+                                <h4>Booking Online</h4>
+                                <div class="expand">
+                                    <p>
+                                        Exhibition curator Venetia Porter presents this new exhibition of works by
+                                        artists from Iran to Morocco drawn from the Museum collection.
+                                    </p>
+                                    <a href="#" class="custom-link">Learn More</a>
+                                </div>
+                                <!-- end expand -->
+                            </div>
+                            <!-- end content-box -->
+                        </div>
+                        <!-- end image-icon-box -->
+                    </div>
+                    <!-- end col-4 -->
+                    <div class="col-lg-4">
+                        <div class="image-icon-box is-inview" data-scroll="" data-scroll-speed="1"
+                            style="transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -0.56875, 0, 1);">
+                            <figure class="icon">
+                                <img src="images/icon06.png" alt="Image">
+                            </figure>
+                            <figure class="content-image">
+                                <img src="{{ product.image_4.url }}" alt="Image">
+                            </figure>
+                            <div class="content-box">
+                                <b>03.</b>
+                                <h4>Keep Your Distance</h4>
+                                <div class="expand">
+                                    <p>
+                                        Take a look at our past exhibitions and enjoy the articles, videos and photo
+                                        galleries still available to view online.
+                                    </p>
+                                    <a href="#" class="custom-link">Learn More</a>
+                                </div>
+                                <!-- end expand -->
+                            </div>
+                            <!-- end content-box -->
+                        </div>
+                        <!-- end image-icon-box -->
+                    </div>
+                    <!-- end col-4 -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </section>
+
         <section class="content-section">
             <div class="container">
                 <div class="row">
@@ -129,7 +203,7 @@
             </div>
             <!-- end container -->
         </section>
-        <!-- end content-section -->
+
         <section class="content-section no-spacing">
             <div class="container">
                 <div class="row align-items-center">
@@ -167,7 +241,7 @@
             </div>
             <!-- end container -->
         </section>
-        <!-- end content-section -->
+
         <section class="content-section">
             <div class="container">
                 <div class="row align-items-center">
@@ -211,7 +285,7 @@
             </div>
             <!-- end container -->
         </section>
-        <!-- end content-section -->
+
         <section class="content-section no-spacing" data-background="#94ffc4">
             <div class="container">
                 <div class="row">
@@ -243,7 +317,7 @@
             </div>
             <!-- end container -->
         </section>
-        <!-- end content-section -->
+
 
         <!-- FOOTER -->
         {% include 'common_includes/footer.html' %}
