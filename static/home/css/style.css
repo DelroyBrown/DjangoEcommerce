@@ -1673,7 +1673,7 @@ button[type="submit"] i {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    padding-right: 80px;
+    /* padding-right: 40px; */
 }
 
 .side-icon-list.right-side {

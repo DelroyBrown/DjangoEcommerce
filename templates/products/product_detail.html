@@ -3,6 +3,29 @@
 {% load static %}
 
 {% block content %}
+<style>
+    .all-exibits-btn {
+      height: 40px;
+      line-height: 40px;
+      display: inline-block;
+      padding: 0 80px;
+      background: #94ffc4;
+      color: #080808;
+      font-size: 14px;
+      font-weight: 700;
+      -webkit-transition: .25s ease-in-out;
+      -moz-transition: .25s ease-in-out;
+      -ms-transition: .25s ease-in-out;
+      -o-transition: .25s ease-in-out;
+      transition: .25s ease-in-out;
+  }
+  
+  .all-exibits-btn:hover {
+      text-decoration: none;
+      background: #080808;
+      color: #fff;
+  }
+  </style>
 
 
 <div class="smooth-scroll">
@@ -64,6 +87,11 @@
                                     <td>: {{ product.museum_location }}</td>
                                 </tr>
                             </table>
+                            <div class="mt-5">
+                                <a href="{% url 'Ecommerce_cart:add_to_cart' product.id %}" class="all-exibits-btn">
+                                    Buy Tickets
+                                </a>
+                              </div>
                         </div>
                         <!-- end side-content -->
 

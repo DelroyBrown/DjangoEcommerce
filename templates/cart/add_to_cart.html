@@ -1,16 +1,134 @@
 <!-- templates\cart\add_to_cart.html -->
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<h2>Add {{ product.name }} to Cart</h2>
-<p><strong>Price:</strong> ${{ product.price }}</p>
-<p><strong>Stock:</strong> {{ product.stock }}</p>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add to Cart</button>
-</form>
+<style>
+    .opening-closing-times-box {
+        display: flex !important;
+        /* flex-wrap: wrap; */
 
-<a href="{% url 'Ecommerce_products:product_detail' product.id %}">Back to Product</a>
+    }
+
+    @media only screen and (max-width: 767px),
+    only screen and (max-device-width: 767px) {
+
+        .opening-closing-times-box {
+            flex-wrap: wrap;
+
+        }
+    }
+</style>
+
+
+<div class="smooth-scroll">
+    <div class="section-wrapper" data-scroll-section>
+        <!-- SEARCH BOX -->
+        {% include 'common_includes/search.html' %}
+        <!-- SIDE BOX -->
+        {% include 'common_includes/side-box.html' %}
+        <!-- NAV BAR -->
+        {% include 'common_includes/nav-bar.html' %}
+
+        <section class="content-section" data-background="#fffbf7">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="side-content left">
+                            <h2>{{ product.name }}</h2>
+                            <p>{{ product.description }}</p>
+                        </div>
+                        <!-- end side-content -->
+                        <div class="clearfix spacing-50"></div>
+                        <div class="side-icon-list">
+                            <ul class="opening-closing-times-box">
+                                <li>
+                                    <div class="content">
+                                        <h5>Opening</h5>
+                                        <p>{{ product.opening_time|date:"l, F dS" }}<br>
+                                            {{ product.opening_time|time:"fA" }}
+                                        </p>
+                                    </div>
+
+                                    <!-- end content -->
+                                </li>
+                                <li>
+                                    <div class="content">
+                                        <h5>Closing</h5>
+                                        <p>{{ product.closing_time|date:"l, F dS" }}<br>
+                                            {{ product.closing_time|time:"fA" }}
+                                        </p>
+                                    </div>
+
+                                    <!-- end content -->
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- end side-icon-list -->
+                    </div>
+                    <!-- end col-6 -->
+                    <div class="col-lg-6">
+                        <figure class="side-image" data-scroll data-scroll-speed="1"> <img
+                                src="{% static 'images/side-imag01.jpg' %}" alt="Image"> </figure>
+                    </div>
+                    <!-- end col-6 -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </section>
+        <!-- end content-section -->
+        <section class="content-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="contact-box">
+                            <h4>{{ product.name }}</h4>
+                            <p>{{ product.museum_location }}</p>
+                            <p>£{{ product.price }}</p>
+                        </div>
+                        <div class="contact-box">
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit">Add to Cart</button>
+                            </form>
+                        </div>
+                        <!-- end contact-box -->
+                        <div class="clearfix spacing-50"></div>
+                    </div>
+                    <!-- end col-5 -->
+                    <div class="col-lg-7">
+                        <div class="side-list">
+                            <ul>
+                                <li>
+                                    Secure your ticket by completing your purchase.
+                                </li>
+                                <li>
+                                    Keep an eye on your inbox for the confirmation email.</li>
+                                <li>
+                                    Save and have your QR code readily accessible.
+                                </li>
+                                <li>
+                                    On the event day, present your QR code to the staff at the entrance for seamless
+                                    entry.
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- end side-list -->
+                    </div>
+                    <!-- end col-7 -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </section>
+        <!-- end content-section -->
+
+
+    </div>
+</div>
+
+
 {% endblock %}

@@ -96,6 +96,8 @@ celerybeat-schedule.*
 
 home copy.html
 product_detail copy.html
+add_to_cart copy.html
+cart_detail copy.html
 
 # SageMath parsed files 
 *.sage.py 
