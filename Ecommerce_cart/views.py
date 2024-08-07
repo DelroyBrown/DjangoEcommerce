@@ -1,9 +1,13 @@
 # Ecommerce_cart\views.py
 import stripe
 import json
+import qrcode
+from io import BytesIO
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
 from django.http import JsonResponse
 from django.urls import reverse
 from django.conf import settings
@@ -145,9 +149,39 @@ def payment_success(request):
             price=item.product.price,
         )
 
+    qr_url = request.build_absolute_uri(
+        reverse("Ecommerce_cart:museum_entry", args=[order.id])
+    )
+    qr = qrcode.make(qr_url)
+    qr_bytes = BytesIO
+    qr.save(qr_bytes, format="PNG")
+    qr_bytes.seek(0)
+
+    email_subject = "Your Museum Entry QR Code"
+    email_body = render_to_string(
+        "emails/museum_entry.html", {"order": order, "qr_url": qr_url}
+    )
+    email = EmailMessage(
+        email_subject,
+        email_body,
+        settings.DEFAULT_FROM_EMAIL,
+        [request.user.email],
+    )
+    email.attach("qr_code.png", qr_bytes.read(), "image/png")
+    email.content_subtype = "html"
+    email.send()
+
     cart.items.all().delete()
 
     return render(request, "cart/payment_success.html", {"order": order})
+
+
+@login_required
+def museum_entry(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    order_items = order.order_items.all()
+    context = {"order": order, "order_items": order_items}
+    return render(request, "cart/museum_entry.html", context)
 
 
 @login_required

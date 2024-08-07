@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Museum Entry</title>
+</head>
+<body>
+    <p>Dear {{ order.user.username }},</p>
+    <p>Thank you for your purchase! Please find your museum entry QR code attached.</p>
+    <p>You can also access your entry using the following link:</p>
+    <p><a href="{{ qr_url }}">{{ qr_url }}</a></p>
+</body>
+</html>

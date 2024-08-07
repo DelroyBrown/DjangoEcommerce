@@ -25,6 +25,7 @@ urlpatterns = [
     ),
     path("order-history/", views.order_history, name="order_history"),
     path("order/<int:order_id>/", views.order_detail, name="order_detail"),
+    path("museum-entry/<int:order_id>/", views.museum_entry, name="museum_entry"),
 ]
 
 if settings.DEBUG:

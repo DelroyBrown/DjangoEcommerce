@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Museum Entry for Order #{{ order.id }}</h1>
+<p><strong>Name:</strong> {{ order.user.username }}</p>
+<p><strong>Email:</strong> {{ order.user.email }}</p>
+<p><strong>Shipping Address:</strong> {{ order.shipping_address }}</p>
+<h2>Purchased Products:</h2>
+<ul>
+    {% for item in order_items %}
+        <li>{{ item.quantity }} x {{ item.product.name }}</li>
+    {% endfor %}
+</ul>{% endblock %}
