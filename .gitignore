@@ -98,6 +98,7 @@ home copy.html
 product_detail copy.html
 add_to_cart copy.html
 cart_detail copy.html
+login_or_register copy.html
 
 # SageMath parsed files 
 *.sage.py 

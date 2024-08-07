@@ -1,9 +1,35 @@
 <!-- templates\users\registration\login_or_register.html -->
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<h2>Please Login or Register</h2>
-<p>To continue, you need to either log in or register.</p>
-<a href="{% url 'Ecommerce_users:login' %}?next={{ next }}">Login</a> or
-<a href="{% url 'Ecommerce_users:register' %}?next={{ next }}">Register</a>
+<!-- SEARCH BOX -->
+{% include 'common_includes/search.html' %}
+<!-- SIDE BOX -->
+{% include 'common_includes/side-box.html' %}
+<!-- NAV BAR -->
+{% include 'common_includes/nav-bar.html' %}
+<section class="content-section" data-background="#fffbf7" style="background: rgb(255, 251, 247);">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="section-title text-center">
+                    <figure><img src="{% static 'images/title-shape.png' %}" alt="Image"></figure>
+                    <h2><a style="text-decoration: underline;"
+                            href="{% url 'Ecommerce_users:login' %}?next={{ next }}">Sign in</a> or
+                        <a style="text-decoration: underline;"
+                            href="{% url 'Ecommerce_users:register' %}?next={{ next }}">
+                            register
+                        </a> to book your ticket seamlessly now.
+                    </h2>
+                </div>
+                <!-- end section-title -->
+            </div>
+
+       
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</section>
 {% endblock %}
