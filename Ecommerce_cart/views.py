@@ -2,6 +2,7 @@
 import stripe
 import json
 import qrcode
+import logging
 from io import BytesIO
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -123,6 +124,9 @@ def create_checkout_session(request):
     return JsonResponse({"id": session.id})
 
 
+logger = logging.getLogger("Ecommerce_cart")
+
+
 @login_required
 def payment_success(request):
     session_id = request.GET.get("session_id")
@@ -153,13 +157,15 @@ def payment_success(request):
         reverse("Ecommerce_cart:museum_entry", args=[order.id])
     )
     qr = qrcode.make(qr_url)
-    qr_bytes = BytesIO
+
+    # Instantiate BytesIO
+    qr_bytes = BytesIO()
     qr.save(qr_bytes, format="PNG")
     qr_bytes.seek(0)
 
     email_subject = "Your Museum Entry QR Code"
     email_body = render_to_string(
-        "emails/museum_entry.html", {"order": order, "qr_url": qr_url}
+        "cart/emails/museum_entry.html", {"order": order, "qr_url": qr_url}
     )
     email = EmailMessage(
         email_subject,
@@ -167,9 +173,14 @@ def payment_success(request):
         settings.DEFAULT_FROM_EMAIL,
         [request.user.email],
     )
-    email.attach("qr_code.png", qr_bytes.read(), "image/png")
+    email.attach("qr_code.png", qr_bytes.getvalue(), "image/png")
     email.content_subtype = "html"
-    email.send()
+
+    try:
+        email.send()
+        logger.info("Email sent successfully to %s", request.user.email)
+    except Exception as e:
+        logger.error("Error sending email: %s", e)
 
     cart.items.all().delete()
 
